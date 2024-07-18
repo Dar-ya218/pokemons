@@ -12,6 +12,14 @@ interface PokemonDetails {
   sprites: {
     front_shiny: string
   }
+  types: [
+    {
+      type: {
+        name: string
+      }
+    }
+  
+  ]
 }
 
 function App() {
@@ -38,6 +46,17 @@ function App() {
 
   return (
     <> 
+      <h2>Fire Pokemon filtered</h2>
+      {
+        pokemonDetails.length > 0 && pokemonDetails.filter((pokemon) => pokemon.types[0]?.type.name === 'fire').sort((a, b) => a.id - b.id).map((pokemon) => (
+          <div key={pokemon.id} className="pokemon">
+            <h2>{pokemon.name}</h2>
+            <img src={pokemon.sprites.front_shiny} alt={pokemon.name} />
+            <p>{pokemon.types.map((type) => type.type.name).join(', ')}</p>
+          </div>
+        ))
+      }
+      <h2>First 10 pokemons</h2>
       {
         pokemonDetails.length > 0 && pokemonDetails.map((poke: PokemonDetails) => (
           <div key={poke.id}>
